@@ -14,7 +14,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.ensemble import GradientBoostingClassifier
-from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score
 import pandas as pd
 import pickle
@@ -36,7 +35,6 @@ with open('all_trained_models.pkl', 'rb') as file:
 loaded_log_reg = loaded_data['Logistic Regression']
 loaded_rf_clf = loaded_data['Random Forest']
 loaded_svc_model = loaded_data['SVC']
-loaded_xgb_model = loaded_data['XGBoost']
 loaded_gb_model = loaded_data['Gradient Boosting']
 loaded_le = loaded_data['Label Encoder (Gender)']
 loaded_scaler = loaded_data['Standard Scaler']
@@ -75,7 +73,6 @@ with st.form(key='patient_form'):
     log_reg = st.checkbox('Logistic Regression')
     rf_clf = st.checkbox('Random Forest')
     svc_model = st.checkbox('SVC')
-    xgb_model = st.checkbox('XGBoost')
     gb_model = st.checkbox('Gradient Boosting')
  
     # Submit button
@@ -117,10 +114,7 @@ if submit_button:
         prediction_svc_model = predict_diabetes(input_data, loaded_svc_model)
 
         st.write(f"Prediction using SVC: {'Diabetes' if prediction_svc_model == 1 else 'No Diabetes'}")
-    if xgb_model:
-        prediction_xgb_model = predict_diabetes(input_data, loaded_xgb_model)
-
-        st.write(f"Prediction using XGBoost: {'Diabetes' if prediction_xgb_model == 1 else 'No Diabetes'}")
+    
     if gb_model:
         prediction_gb_model = predict_diabetes(input_data, loaded_gb_model)
 

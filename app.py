@@ -35,7 +35,6 @@ with open('all_trained_models.pkl', 'rb') as file:
 loaded_log_reg = loaded_data['Logistic Regression']
 loaded_rf_clf = loaded_data['Random Forest']
 loaded_svc_model = loaded_data['SVC']
-loaded_gb_model = loaded_data['Gradient Boosting']
 loaded_le = loaded_data['Label Encoder (Gender)']
 loaded_scaler = loaded_data['Standard Scaler']
  

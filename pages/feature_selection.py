@@ -8,6 +8,8 @@ st.set_page_config(page_title="Model Comparision", layout="wide")
 image1_path = "asserts/fs3.png"
 image2_path = "asserts/fs2.png"
 image3_path = "asserts/fs1.png"
+image4_path = "asserts/fs4.png"
+
 
 
 # Load images with corrected paths
@@ -15,6 +17,7 @@ try:
     image1 = Image.open(image1_path)
     image2 = Image.open(image2_path)
     image3 = Image.open(image3_path)
+    image4 = Image.open(image4_path)
 
 except FileNotFoundError as e:
     st.error(f"Error loading image: {e}")
@@ -30,4 +33,5 @@ with col:
     st.image(image1, caption='Figure: 1: correlation matrix ', use_column_width=True)
     st.image(image2, caption='Figure: 2: RFE', use_column_width=True)
     st.image(image3, caption='Figure: 3: Feature importance', use_column_width=True)
+    st.image(image4, caption='Figure: 4: SHAP Values', use_column_width=True)
 

@@ -14,7 +14,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.ensemble import GradientBoostingClassifier
-from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score
 import pandas as pd
 import pickle

@@ -28,7 +28,7 @@ import pandas as pd
 import pickle
  
 # Load all models and preprocessing tools from the pickle file
-with open('all_trained_models_final.pkl', 'rb') as file:
+with open('all_trained_models.pkl', 'rb') as file:
     loaded_data = pickle.load(file)
  
 # Extract models and preprocessors

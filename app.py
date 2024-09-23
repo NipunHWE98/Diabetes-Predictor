@@ -14,6 +14,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.ensemble import GradientBoostingClassifier
+from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score
 import pandas as pd
 import pickle
@@ -28,15 +29,15 @@ import pandas as pd
 import pickle
  
 # Load all models and preprocessing tools from the pickle file
-with open('all_trained_models.pkl', 'rb') as file:
+with open('all_trained_models_final.pkl', 'rb') as file:
     loaded_data = pickle.load(file)
  
 # Extract models and preprocessors
 loaded_log_reg = loaded_data['Logistic Regression']
 loaded_rf_clf = loaded_data['Random Forest']
 loaded_svc_model = loaded_data['SVC']
+# loaded_xgb_model = loaded_data['XGBoost']
 loaded_gb_model = loaded_data['Gradient Boosting']
-
 loaded_le = loaded_data['Label Encoder (Gender)']
 loaded_scaler = loaded_data['Standard Scaler']
  
@@ -70,11 +71,12 @@ with st.form(key='patient_form'):
                                    [ 'never','current', 'ever', 'former', 'not current'])
  
     # Checkbox to select the model
-    st.header('Select a model for prediction:')
-    log_reg = st.checkbox('Logistic Regression')
-    rf_clf = st.checkbox('Random Forest')
-    svc_model = st.checkbox('SVC')
-    gb_model = st.checkbox('Gradient Boosting')
+    # st.header('Select a model for prediction:')
+    # log_reg = st.checkbox('Logistic Regression')
+    # rf_clf = st.checkbox('Random Forest')
+    # svc_model = st.checkbox('SVC')
+    # # xgb_model = st.checkbox('XGBoost')
+    # gb_model = st.checkbox('Gradient Boosting')
  
     # Submit button
     submit_button = st.form_submit_button(label='Submit')
@@ -101,25 +103,19 @@ if submit_button:
         'blood_glucose_level': blood_glucose_level,
         **smoking_history_data
     }])
- 
+    prediction_log_reg = predict_diabetes(input_data, loaded_log_reg)
+    prediction_rf_clf = predict_diabetes(input_data, loaded_rf_clf)
+    prediction_svc_model = predict_diabetes(input_data, loaded_svc_model)
+    # prediction_xgb_model = predict_diabetes(input_data, loaded_xgb_model)
+    prediction_gb_model = predict_diabetes(input_data, loaded_gb_model)
+    print(prediction_log_reg,prediction_rf_clf,prediction_svc_model,prediction_gb_model)
+   
     # Check which model is selected and make predictions
-    if log_reg:
-        prediction_log_reg = predict_diabetes(input_data, loaded_log_reg)
-
-        st.write(f"Prediction using Logistic Regression: {'Diabetes' if prediction_log_reg == 1 else 'No Diabetes'}")
-    if rf_clf:
-        prediction_rf_clf = predict_diabetes(input_data, loaded_rf_clf)
-
-        st.write(f"Prediction using Random Forest: {'Diabetes' if prediction_rf_clf == 1 else 'No Diabetes'}")
-    if svc_model:
-        prediction_svc_model = predict_diabetes(input_data, loaded_svc_model)
-
-        st.write(f"Prediction using SVC: {'Diabetes' if prediction_svc_model == 1 else 'No Diabetes'}")
-    
-    if gb_model:
-        prediction_gb_model = predict_diabetes(input_data, loaded_gb_model)
-
-        st.write(f"Prediction using Gradient Boosting: {'Diabetes' if prediction_gb_model == 1 else 'No Diabetes'}")
-        
-        
-
+   
+    st.write(f"Prediction using Logistic Regression: {'Diabetes' if prediction_log_reg == 1 else 'No Diabetes'}")
+    st.write(f"Prediction using Random Forest: {'Diabetes' if prediction_rf_clf == 1 else 'No Diabetes'}")
+    st.write(f"Prediction using SVC: {'Diabetes' if prediction_svc_model == 1 else 'No Diabetes'}")
+    # if xgb_model:
+        # st.write(f"Prediction using XGBoost: {'Diabetes' if prediction_xgb_model == 1 else 'No Diabetes'}")
+    st.write(f"Prediction using Gradient Boosting: {'Diabetes' if prediction_gb_model == 1 else 'No Diabetes'}")
+   
